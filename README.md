@@ -1,0 +1,491 @@
+# ExplainThisRepo
+
+_The fastest way to understand any unfamiliar codebase using real project signals. Not blind AI guessing. Signals first. LLM second_
+
+ExplainThisRepo analyzes real project signals; configs, entrypoints, manifests, dependencies graph, structures and high-signal files producing a clear, structured `EXPLAIN.md` that shows you what the codebase actually does, how it is organized, where to start, what to ignore, and what matters before touching unfamiliar codebases.
+
+[![PyPI Version](https://img.shields.io/pypi/v/explainthisrepo?color=blue)](https://pypi.org/project/explainthisrepo/)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/explainthisrepo?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/explainthisrepo)
+[![Python](https://img.shields.io/pypi/pyversions/explainthisrepo?logo=python&logoColor=white)](https://pypi.org/project/explainthisrepo/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/explainthisrepo)](https://www.npmjs.com/package/explainthisrepo)
+[![Node](https://img.shields.io/node/v/explainthisrepo)](https://www.npmjs.com/package/explainthisrepo)
+[![.NuGet version](https://img.shields.io/nuget/v/explainthisrepo)](https://www.nuget.org/packages/explainthisrepo)
+[![Docs](https://img.shields.io/badge/docs-explainthisrepo.com-black)](https://explainthisrepo.com)
+
+![demo](https://github.com/user-attachments/assets/837e0593-db64-4657-8855-bb1915011eb6)
+
+## Key Features
+
+- Understand any GitHub repository in seconds
+- System map that shows you where to start, what to ignore, what matters and why
+- Deterministic repo signal extractor that feeds LLMs correctly.
+- Speeds up understanding of unfamiliar codebases
+- Solves the "**garbage in, garbage out**" problem specifically for codebases
+- Multiple modes (quick, simple, detailed) that translates complex repository structure and code signals into architectural summaries. Not blind AI guessing. Signals first. LLM second
+- Works with GitHub repositories, local repositories, GitHub directories, local directories, GitHub files and local files
+- Supports private repositories and monorepos
+- Zero-cloning and remote analysis
+- Extract architecture signals from configs, entrypoints, and manifests
+- Outputs the explanation to an `EXPLAIN.md` file in your current directory, prints it directly in the terminal, or a specified output file (`.txt`, `.pdf`, `.docx`, `.md`)
+- Additional tools: stack detection, repo map
+
+## Installation
+
+ExplainThisRepo supports multiple installation methods:
+
+- pip (Python package)
+- npm (prebuilt native binaries)
+- .NET global tool
+- standalone binaries
+
+### Quick install
+
+#### pip
+
+```bash
+pip install explainthisrepo
+```
+
+Alternatively,
+
+```bash
+pipx install explainthisrepo
+```
+
+#### npm
+
+```bash
+npm install -g explainthisrepo
+```
+
+Alternatively
+
+```bash
+npx explainthisrepo owner/repo
+```
+
+#### .NET
+
+```bash
+dotnet tool install -g ExplainThisRepo
+```
+
+#### Run
+
+```bash
+explainthisrepo owner/repo
+```
+
+After installation, use any of the available command names:
+
+```bash
+explainthisrepo owner/repo
+explain-this-repo owner/repo
+etr owner/repo
+explain owner/repo
+```
+
+Replace `owner/repo` with the GitHub repository identifier (e.g., `facebook/react`, `torvalds/linux`).
+
+
+For full installation instructions, platform-specific notes, standalone binaries, and advanced setup: [docs/INSTALLATION.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/INSTALLATION.md)
+
+## Flexible Input Types
+
+Accepts various formats for repository input, full GitHub URLs (with or without https), `owner/repo` format, issue links, query strings, and SSH clone links
+
+```bash
+explainthisrepo https://github.com/owner/repo
+explainthisrepo github.com/owner/repo
+explainthisrepo https://github.com/owner/repo/issues/123
+explainthisrepo https://github.com/owner/repo?tab=readme
+explainthisrepo git@github.com:owner/repo.git
+explainthisrepo owner/repo/path/to/directory
+explainthisrepo owner/repo/path/to/file.py
+explainthisrepo .
+explainthisrepo ./path/to/directory
+explainthisrepo ./path/to/file.py
+```
+
+GitHub repo inputs are normalized internally to `owner/repo`.
+
+## Configuration
+
+ExplainThisRepo supports multiple LLM models:
+
+- Gemini
+- OpenAI
+- Ollama (local or cloud-routed)
+- Anthropic
+- Groq
+- OpenRouter
+
+Use the built-in `init` command to configure your preferred model:
+
+```bash
+explainthisrepo init
+# or npx explainthisrepo init
+```
+
+> For details about how initialization works, see [docs/INIT.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/INIT.md).
+
+To install support for specific models:
+
+```bash
+pip install explainthisrepo[gemini]
+pip install explainthisrepo[openai]
+pip install explainthisrepo[anthropic]
+pip install explainthisrepo[groq]
+```
+
+## GitHub token Access (Private Repos & Rate Limits)
+
+ExplainThisRepo supports GitHub authentication for:
+
+- Accessing private repositories
+- Higher API rate limits on public repositories
+
+```bash
+explainthisrepo init
+```
+
+For step-by-step instructions, see [docs/GITHUB_TOKEN.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/GITHUB_TOKEN.md)
+
+## Flag options
+
+- (no flag) → Full repository explanation written to `EXPLAIN.md`
+
+- `--quick` → One-sentence summary
+
+- `--simple` → Short, simplified explanation
+
+- `--detailed` → Deeper explanation including structure and architecture
+
+- `--stack` → Tech stack breakdown from repo signals
+
+- `--map` → System map for understanding a codebase before changing it
+
+- `--version` → Check installed CLI version
+
+- `--help` → Show usage guide
+
+- `--doctor` → Check system health and active model diagnostics
+
+- `--llm` → Override provider selection
+
+- `--output` / `-o` → Specify output file or directory (default: `EXPLAIN.md`)
+
+## CLI aliases
+
+ExplainThisRepo ships with multiple command names that all map to the same entrypoint:
+
+- `explainthisrepo` → primary command
+- `explain-this-repo` → readable alias
+- `etr` → short alias for faster typing
+- `explain` → to figure out when overwhelmed in unfamiliar codebase
+- `ExplainThisRepo` → useful name command for backup
+- `explain-this` / `explainthis` → fun word play command
+
+All three commands run the same tool and support the same flags and modes.
+
+## Model selection
+
+The `--llm` flag selects which configured model backend to use for the current command.
+
+```bash
+explainthisrepo owner/repo --llm gemini
+explainthisrepo owner/repo --llm openai
+explainthisrepo owner/repo --llm ollama
+explainthisrepo owner/repo --llm anthropic
+explainthisrepo owner/repo --llm openrouter
+explainthisrepo owner/repo --llm groq
+```
+
+`--llm` works with all modes (``--quick``, ``--simple``, ``--detailed``).
+
+## Command line usage
+
+### Default
+Writes a full explanation to `EXPLAIN.md`:
+
+```bash
+explainthisrepo owner/repo
+#e.g. explainthisrepo vercel/next.js
+```
+
+### Quick mode
+
+Prints a one-sentence summary to stdout:
+```bash
+explainthisrepo owner/repo --quick
+# explainthisrepo facebook/react --quick
+```
+
+```bash
+$ explainthisrepo vercel/next.js --quick
+
+Next.js is a React framework that provides server-side rendering,
+file-based routing, API routes, and build tooling for fullstack
+web applications.
+```
+
+![Quick Mode Output](assets/quick-command-output.png)
+
+---
+
+### Detailed mode
+
+Writes a more detailed explanation of repository structure and architecture:
+
+```bash
+explainthisrepo owner/repo --detailed
+```
+
+![Detailed Mode Output](assets/detailed-command-output.png)
+
+---
+
+### Simple mode
+
+Prints a short, simplified explanation to stdout. No files are written.
+
+```bash
+explainthisrepo owner/repo --simple
+```
+
+![Simple Mode Output](assets/simple-command-output.png)
+
+---
+
+### Stack detector
+
+Tech stack breakdown detected from repo signals. No LLM calls are made.
+
+```bash
+explainthisrepo owner/repo --stack
+```
+![Stack detector Output](assets/stack-command-output.png)
+
+### Repo map
+
+Navigation system map for understanding unfamiliar codebases that shows you where to start, what matters and what to ignore before touching it:
+
+```bash
+explainthisrepo owner/repo --map
+explainthisrepo . --map
+```
+
+By default, repo map mode writes to `REPO_MAP.md`.
+
+The map focuses on:
+
+- where to start reading
+- the likely main flow through the project
+- important files and why they matter
+- visible architecture boundaries
+- files or folders to ignore first
+- open questions that cannot be determined from repo signals
+
+![Repo map Output](assets/repo-map-command-output.png)
+
+## Local Directory Analysis
+
+ExplainThisRepo can analyze local directories directly in the terminal, using the same modes and output formats as GitHub repositories
+
+```bash
+explainthisrepo .
+explainthisrepo ./path/to/directory
+```
+
+This works with all existing modes:
+
+<details>
+
+```bash
+explainthisrepo . --quick
+explainthisrepo . --simple
+explainthisrepo . --detailed
+explainthisrepo . --stack
+explainthisrepo . --map
+```
+
+</details>
+
+When analyzing a local directory:
+- Repository structure is derived from the filesystem
+- High signal files (configs, entrypoints, manifests) are extracted locally
+- No GitHub APIs calls are made
+- All prompts and outputs remain identical
+
+This allows analysis of projects directly from the local filesystem, without requiring a GitHub repository.
+
+
+## File Analysis
+
+ExplainThisRepo analyzes individual files directly
+
+```bash
+explainthisrepo ./path/to/file.py
+```
+
+Supports all explanation modes:
+
+<details>
+
+```bash
+explainthisrepo ./file.py --quick
+explainthisrepo ./file.py --simple
+explainthisrepo ./file.py --detailed
+```
+
+</details>
+
+When analyzing a file:
+- The file is read safely with encoding and size limits
+- Structure and basic signals (size, lines, type) are extracted
+- The explanation focuses on purpose, logic, and behavior
+- This makes it easy to understand unfamiliar files without scanning entire repositories.
+
+## GitHub File Analysis
+
+ExplainThisRepo can analyze a single file directly from a GitHub repository without cloning it.
+
+```bash
+explainthisrepo owner/repo/path/to/file.py
+```
+Supports all explanation modes:
+
+<details>
+
+```bash
+explainthisrepo owner/repo/path/to/file.py --quick
+explainthisrepo owner/repo/path/to/file.py --simple
+explainthisrepo owner/repo/path/to/file.py --detailed
+```
+
+</details>
+
+When analyzing a GitHub file:
+- The file is fetched directly via the GitHub API
+- Raw bytes are passed into a unified ingestion pipeline
+- Binary detection, decoding, and size limits are handled in one place
+- File ingestion is identical to local file analysis
+- The explanation focuses on the file’s purpose, logic, and behavior
+- This removes divergence between local and GitHub file handling
+
+Input format must be:
+
+```bash
+explainthisrepo owner/repo/path/to/file
+```
+
+This is different from local file analysis:
+
+```bash
+explainthisrepo ./path/to/file.py
+```
+
+## GitHub Directory Analysis
+
+ExplainThisRepo can analyze a specific directory inside a GitHub repository without cloning it.
+
+```bash
+explainthisrepo owner/repo/path/to/directory
+```
+Supports all explanation modes:
+
+<details>
+
+```bash
+explainthisrepo owner/repo/path/to/directory --quick
+explainthisrepo owner/repo/path/to/directory --simple
+explainthisrepo owner/repo/path/to/directory --detailed
+```
+
+</details>
+
+When analyzing a GitHub directory:
+
+- Directory contents are fetched via the GitHub API
+- Only structure and metadata are used (no full repo fetch)
+- Signals include files, subdirectories, and extension distribution
+- The explanation focuses on the directory’s role and structure
+
+`--stack` is not supported for directory targets.
+
+### Custom output
+
+`--output`, `-o` → Specify output file or directory (default: `EXPLAIN.md`)
+
+Write to a specific file:
+
+```bash
+explainthisrepo owner/repo --output notes.md
+```
+
+Write to a nested path:
+```bash
+explainthisrepo owner/repo --output path/to/file.md
+```
+
+Write to a directory (creates EXPLAIN.md inside):
+
+```bash
+explainthisrepo owner/repo --output path/to/directory
+```
+
+### Version
+
+Check the installed CLI version:
+
+```bash
+explainthisrepo --version
+```
+
+### Diagnostics
+
+Use the `--doctor` flag to verify the environment, network connectivity, and API key configuration:
+
+```bash
+explainthisrepo --doctor
+```
+
+## Termux (Android)
+
+ExplainThisRepo supports Termux on Android.
+
+For installation notes, PATH setup, Gemini support, and mobile-specific recommendations: see [docs/TERMUX.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/TERMUX.md)
+
+## Philosophy
+
+I built ExplainThisRepo with a personal motivation: my mum makes me fall in love with life again. That feeling of mental clarity, simplicity, grounded understanding and appreciation is what I wanted to bring into how developers understand codebases.
+
+I believe in this problem, and I want to solve it. I believe understanding code should feel less overwhelming and more comfortable when navigating large codebases. If ExplainThisRepo still makes you feel overwhelmed when reading code, I failed.
+
+## Special Thanks
+
+- @Spectra010s for implementing the initial Node.js version of ExplainThisRepo and improving installation support for mobile environments like Termux
+- @HalxDocs for implementing the `--detailed` mode for deeper architectural explanations
+- @Manuel-Technologies for implementing the .NET global tool launcher and NuGet distribution support
+
+## Contributions
+
+Contributions are welcome!
+
+If you find a bug, have an idea, or want to improve the tool:
+- See [CONTRIBUTING](CONTRIBUTING.md) for setup and guidelines
+- Open an issue for bugs/feature requests
+- Or submit a pull request for fixes/improvements
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Caleb Wodi
+
+- Email: caleb@explainthisrepo.com
+- LinkedIn: [@calchiwo](https://linkedin.com/in/calchiwo)
+- Twitter: [@calchiwo](https://x.com/calchiwo)

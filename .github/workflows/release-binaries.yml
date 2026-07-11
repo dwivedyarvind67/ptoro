@@ -1,0 +1,307 @@
+name: Build and Publish Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  NODE_VERSION: 20
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: darwin-arm64
+            runner: macos-latest
+
+          - target: linux-x64
+            runner: ubuntu-latest
+
+          - target: linux-arm64
+            runner: ubuntu-24.04-arm
+
+          - target: win-x64
+            runner: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Validate git tag matches pyproject version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" != refs/tags/* ]]; then
+            echo "This workflow must run from a git tag"
+            exit 1
+          fi
+
+          TAG="${GITHUB_REF#refs/tags/v}"
+          VERSION="$(python scripts/get_version.py)"
+
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "Tag does not match pyproject.toml"
+            exit 1
+          fi
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install -e .
+          python -m pip install pyinstaller
+
+      - name: Build PyInstaller binary
+        run: python scripts/build_pyinstaller.py
+
+      # Generate checksum
+      - name: Generate checksum
+        shell: bash
+        run: |
+          cd node_version/dist/native/${{ matrix.target }}
+          for f in explainthisrepo*; do
+            if command -v sha256sum >/dev/null 2>&1; then
+              sha256sum "$f" > "$f.sha256"
+            else
+              shasum -a 256 "$f" > "$f.sha256"
+            fi
+          done
+
+      - name: Upload native binary + checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: node_version/dist/native/${{ matrix.target }}
+
+  release:
+    name: Publish npm and GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Extract canonical version
+        shell: bash
+        run: |
+          mkdir -p .ci
+          VERSION="$(python scripts/get_version.py)"
+          printf '%s\n' "$VERSION" > .ci/version.txt
+
+      - name: Validate git tag matches pyproject version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" != refs/tags/* ]]; then
+            echo "This workflow must run from a git tag"
+            exit 1
+          fi
+
+          TAG="${GITHUB_REF#refs/tags/v}"
+          VERSION="$(cat .ci/version.txt)"
+
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "Tag does not match pyproject.toml"
+            exit 1
+          fi
+
+      - name: Rewrite manifests from canonical version
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          version = Path(".ci/version.txt").read_text(encoding="utf-8").strip()
+
+          # node_version/package.json
+          package_json_path = Path("node_version/package.json")
+          package_json = json.loads(package_json_path.read_text(encoding="utf-8"))
+          package_json["version"] = version
+          package_json_path.write_text(
+              json.dumps(package_json, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          # node_version/package-lock.json
+          package_lock_path = Path("node_version/package-lock.json")
+          if package_lock_path.exists():
+              package_lock = json.loads(package_lock_path.read_text(encoding="utf-8"))
+              package_lock["version"] = version
+
+              packages = package_lock.get("packages")
+              if isinstance(packages, dict):
+                  root_pkg = packages.get("")
+                  if isinstance(root_pkg, dict):
+                      root_pkg["version"] = version
+
+              package_lock_path.write_text(
+                  json.dumps(package_lock, indent=2) + "\n",
+                  encoding="utf-8",
+              )
+
+          # dotnet_version/ExplainThisRepo.csproj
+          csproj_path = Path("dotnet_version/ExplainThisRepo.csproj")
+          csproj_text = csproj_path.read_text(encoding="utf-8")
+          new_text, count = re.subn(
+              r"<Version>.*?</Version>",
+              f"<Version>{version}</Version>",
+              csproj_text,
+              count=1,
+              flags=re.S,
+          )
+          if count != 1:
+              raise SystemExit("Could not update <Version> in ExplainThisRepo.csproj")
+          csproj_path.write_text(new_text, encoding="utf-8")
+
+          # Generated version files
+          for version_file in [
+              Path("_version.py"),
+              Path("explain_this_repo/_version.py"),
+              Path("node_version/_version.py"),
+          ]:
+              if version_file.exists():
+                  version_file.write_text(f'VERSION = "{version}"\n', encoding="utf-8")
+          PY
+
+      - name: Download native binaries
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Rehydrate native folder
+        shell: bash
+        run: |
+          mkdir -p node_version/dist/native dotnet_version/native release
+
+          for artifact in artifacts/*; do
+            [ -d "$artifact" ] || continue
+            target="$(basename "$artifact")"
+
+            mkdir -p "node_version/dist/native/$target"
+            mkdir -p "dotnet_version/native/$target"
+
+            cp "$artifact"/explainthisrepo* "node_version/dist/native/$target/"
+            cp "$artifact"/explainthisrepo* "dotnet_version/native/$target/"
+            cp "$artifact"/explainthisrepo* release/
+          done
+
+      # HARD STOP if tampered
+      - name: Verify checksums
+        shell: bash
+        run: |
+          for checksum in $(find node_version/dist/native -name '*.sha256' | sort); do
+            dir="$(dirname "$checksum")"
+            (
+              cd "$dir"
+              sha256sum -c "$(basename "$checksum")"
+            )
+          done
+
+      - name: Verify native binaries exist
+        shell: bash
+        run: |
+          find node_version/dist/native -type f | sort
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org
+          cache: npm
+          cache-dependency-path: node_version/package-lock.json
+
+      - name: Check if npm version exists
+        working-directory: node_version
+        shell: bash
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          VERSION="$(cat ../.ci/version.txt)"
+
+          if npm view "$PACKAGE_NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "Version already exists on npm"
+            exit 1
+          fi
+
+      - name: Install Node deps
+        working-directory: node_version
+        run: npm ci
+
+      - name: Sync package metadata
+        working-directory: node_version
+        run: npm run sync-meta
+
+      - name: Build package tarball
+        working-directory: node_version
+        run: npm pack
+
+      - name: Verify package contains native binaries
+        working-directory: node_version
+        run: |
+          TAR=$(ls *.tgz)
+          tar -tf "$TAR" | grep "dist/native" || (echo "Missing native binaries in package" && exit 1)
+
+      - name: Package check
+        working-directory: node_version
+        run: npm pack --dry-run
+
+      - name: Publish to npm
+        working-directory: node_version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Check if NuGet version exists
+        working-directory: dotnet_version
+        shell: bash
+        run: |
+          PACKAGE_ID=$(grep -oPm1 "(?<=<PackageId>)[^<]+" ExplainThisRepo.csproj)
+          VERSION="$(cat ../.ci/version.txt)"
+
+          if curl -fsSL "https://api.nuget.org/v3-flatcontainer/${PACKAGE_ID,,}/index.json" | grep "\"$VERSION\"" >/dev/null; then
+            echo "Version already exists on NuGet"
+            exit 1
+          fi
+
+      - name: Build and Pack .NET Global Tool
+        working-directory: dotnet_version
+        run: dotnet pack -c Release
+
+      - name: Publish to NuGet
+        working-directory: dotnet_version
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push nupkg/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          generate_release_notes: true

@@ -1,0 +1,55 @@
+{
+  "name": "explainthisrepo",
+  "version": "X.Y.Z",
+  "description": "The fastest way to understand any unfamiliar codebase using real project signals. Not blind AI guessing. Signals first. LLM second",
+  "license": "MIT",
+  "type": "module",
+  "author": "Caleb Wodi <calebwodi33@gmail.com>",
+  "homepage": "https://explainthisrepo.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calchiwo/ExplainThisRepo.git",
+    "directory": "node_version"
+  },
+  "bugs": {
+    "url": "https://github.com/calchiwo/ExplainThisRepo/issues"
+  },
+  "keywords": [
+    "github",
+    "cli",
+    "explain",
+    "repository",
+    "ai",
+    "repo-analysis",
+    "code-explanater",
+    "documentation",
+    "developer-productivity",
+    "developer-tools"
+  ],
+  "bin": {
+    "explainthisrepo": "dist/cli.js",
+    "explain-this-repo": "dist/cli.js",
+    "etr": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "sync-meta": "cp ../README.md README.md && cp ../LICENSE LICENSE",
+    "prepublishOnly": "npm run sync-meta && npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

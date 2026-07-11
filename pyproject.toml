@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=67.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "explainthisrepo"
+version = "0.28.0"
+description = "The fastest way to understand any unfamiliar codebase using real project signals. Not blind AI guessing. Signals first. LLM second"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.9,<4.0"
+license = { text = "MIT" }
+
+authors = [
+  { name = "Caleb Wodi", email = "calebwodi33@gmail.com" }
+]
+
+keywords = ["cli", "codebase-understanding", "repo-analysis", "code-explanation", "developer-tools"]
+
+dependencies = [
+  "requests>=2.31,<3.0",
+  "rich>=15.0.0",
+  "readchar>=4.2.2,<5.0.0"
+]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Environment :: Console",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+gemini = ["google-genai>=1.0.0,<2.0"]
+openai = ["openai>=1.0.0,<3.0"]
+anthropic = ["anthropic>=0.34,<1.0"]
+groq = ["groq>=0.9,<1.0"]
+
+dev = [
+  "pytest>=7.0",
+  "black>=25.11.0",
+  "ruff>=0.15.12",
+  "mypy>=1.19.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["explain_this_repo*"]
+
+[project.urls]
+Homepage = "https://explainthisrepo.com"
+Repository = "https://github.com/calchiwo/ExplainThisRepo"
+"Bug Tracker" = "https://github.com/calchiwo/ExplainThisRepo/issues"
+
+[project.scripts]
+explainthisrepo = "explain_this_repo.cli:main"
+explain-this-repo = "explain_this_repo.cli:main"
+etr = "explain_this_repo.cli:main"
+ExplainThisRepo = "explain_this_repo.cli:main"
+explain = "explain_this_repo.cli:main"
+explainthis = "explain_this_repo.cli:main"
+explain-this = "explain_this_repo.cli:main"
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I"]
