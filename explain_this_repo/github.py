@@ -108,7 +108,7 @@ def _request_json(
                 "Repository not found.\n"
                 "If this is a private repository, configure GitHub access:\n"
                 "- Run `explainthisrepo init`\n"
-                "- Or set GITHUB_TOKEN (see https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/GITHUB_TOKEN.md)"
+                "- Or set GITHUB_TOKEN (see https://github.com/dwivedyarvind67/ptoro/blob/main/docs/GITHUB_TOKEN.md)"
             )
 
         if response.status_code in (403, 429):

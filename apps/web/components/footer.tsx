@@ -53,7 +53,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://github.com/calchiwo/ExplainThisRepo/releases/latest"
+                  href="https://github.com/dwivedyarvind67/ptoro/releases/latest"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -72,7 +72,7 @@ export function Footer() {
             <ul className="space-y-2.5">
               <li>
                 <Link
-                  href="https://github.com/calchiwo/ExplainThisRepo"
+                  href="https://github.com/dwivedyarvind67/ptoro"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -82,7 +82,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://github.com/calchiwo/ExplainThisRepo/blob/main/CONTRIBUTING.md"
+                  href="https://github.com/dwivedyarvind67/ptoro/blob/main/CONTRIBUTING.md"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -102,7 +102,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://github.com/calchiwo/ExplainThisRepo/discussions"
+                  href="https://github.com/dwivedyarvind67/ptoro/discussions"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -181,3 +181,4 @@ export function Footer() {
     </footer>
   )
 }
+

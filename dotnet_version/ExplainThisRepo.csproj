@@ -39,7 +39,7 @@
 
     <Authors>Caleb Wodi</Authors>
     <Description>The fastest way to understand any unfamiliar codebase using real project signals. Not blind AI guessing. Signals first. LLM second.</Description>
-    <RepositoryUrl>https://github.com/calchiwo/ExplainThisRepo</RepositoryUrl>
+    <RepositoryUrl>https://github.com/dwivedyarvind67/ptoro</RepositoryUrl>
     <PackageProjectUrl>https://explainthisrepo.com/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -55,3 +55,4 @@
   </ItemGroup>
 
 </Project>
+

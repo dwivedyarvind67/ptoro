@@ -71,3 +71,4 @@ class GroqProvider(LLMProvider):
             f"GROQ_API_KEY set: {bool(self.api_key)}",
             f"model: {self.model}",
         ]
+

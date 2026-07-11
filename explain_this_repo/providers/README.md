@@ -405,4 +405,4 @@ All future model integrations should be implemented inside this module.
 
 This module defines the integration boundary for LLM providers.
 
-For more details about how initialization works, see also [INIT.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/INIT.md)
+For more details about how initialization works, see also [INIT.md](https://github.com/dwivedyarvind67/ptoro/blob/main/docs/INIT.md)

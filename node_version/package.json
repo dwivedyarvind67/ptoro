@@ -8,11 +8,11 @@
   "homepage": "https://explainthisrepo.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/calchiwo/ExplainThisRepo.git",
+    "url": "git+https://github.com/dwivedyarvind67/ptoro.git",
     "directory": "node_version"
   },
   "bugs": {
-    "url": "https://github.com/calchiwo/ExplainThisRepo/issues"
+    "url": "https://github.com/dwivedyarvind67/ptoro/issues"
   },
   "keywords": [
     "github",
@@ -53,3 +53,4 @@
     "typescript": "^5.6.0"
   }
 }
+

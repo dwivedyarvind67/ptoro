@@ -52,8 +52,8 @@ include = ["explain_this_repo*"]
 
 [project.urls]
 Homepage = "https://explainthisrepo.com"
-Repository = "https://github.com/calchiwo/ExplainThisRepo"
-"Bug Tracker" = "https://github.com/calchiwo/ExplainThisRepo/issues"
+Repository = "https://github.com/dwivedyarvind67/ptoro"
+"Bug Tracker" = "https://github.com/dwivedyarvind67/ptoro/issues"
 
 [project.scripts]
 explainthisrepo = "explain_this_repo.cli:main"

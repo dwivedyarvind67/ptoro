@@ -87,3 +87,4 @@ def detect_stack(
             report["tooling"].append("ESLint")
 
     return report
+

@@ -101,4 +101,4 @@ node dist/cli.js facebook/react
 
 This [npm package](https://www.npmjs.com/package/explainthisrepo) exists for distribution only.
 
-The real product lives in [Python](https://github.com/calchiwo/ExplainThisRepo/blob/main/explain_this_repo/cli.py) implementation.
+The real product lives in [Python](https://github.com/dwivedyarvind67/ptoro/blob/main/explain_this_repo/cli.py) implementation.

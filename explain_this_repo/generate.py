@@ -16,3 +16,4 @@ def generate_explanation(
         raise RuntimeError(f"{provider.name} returned no output")
 
     return output.strip()
+

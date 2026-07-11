@@ -63,3 +63,4 @@ def get_active_provider(
         )
 
     return get_provider(default_provider)
+

@@ -39,3 +39,4 @@ body:
       placeholder: "Screenshots, examples, links."
     validations:
       required: false
+

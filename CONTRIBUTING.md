@@ -158,7 +158,7 @@ Focus on the actual system, not the launchers.
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/calchiwo/ExplainThisRepo.git
+git clone https://github.com/dwivedyarvind67/ptoro.git
 cd ExplainThisRepo
 ```
 

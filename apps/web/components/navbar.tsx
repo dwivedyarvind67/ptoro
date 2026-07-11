@@ -88,7 +88,7 @@ export function Navbar() {
             Install
           </a>
           <Link
-            href="https://github.com/calchiwo/ExplainThisRepo"
+            href="https://github.com/dwivedyarvind67/ptoro"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -145,7 +145,7 @@ export function Navbar() {
               Install
             </a>
             <Link
-              href="https://github.com/calchiwo/ExplainThisRepo"
+              href="https://github.com/dwivedyarvind67/ptoro"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -162,3 +162,4 @@ export function Navbar() {
     </header>
   )
 }
+

@@ -57,3 +57,4 @@ class GeminiProvider(LLMProvider):
             raise LLMProviderError("Gemini returned no text")
 
         return text.strip()
+

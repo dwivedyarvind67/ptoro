@@ -37,7 +37,7 @@ export function Downloads() {
             {binaries.map((binary) => (
               <Link
                 key={binary.platform}
-                href="https://github.com/calchiwo/ExplainThisRepo/releases/latest"
+                href="https://github.com/dwivedyarvind67/ptoro/releases/latest"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between rounded-lg border border-border bg-background px-4 py-4 transition-colors hover:border-primary/30 hover:bg-secondary/50 group"
@@ -57,7 +57,7 @@ export function Downloads() {
           <p className="text-sm text-muted-foreground mt-6 text-center">
             Download from{" "}
             <Link
-              href="https://github.com/calchiwo/ExplainThisRepo/releases/latest"
+              href="https://github.com/dwivedyarvind67/ptoro/releases/latest"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
@@ -70,3 +70,4 @@ export function Downloads() {
     </section>
   )
 }
+

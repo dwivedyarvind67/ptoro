@@ -24,3 +24,4 @@ Please include:
 Please do not open a public GitHub issue for security vulnerabilities.
 
 I will confirm receipt within 72 hours and work on a fix as soon as possible.
+

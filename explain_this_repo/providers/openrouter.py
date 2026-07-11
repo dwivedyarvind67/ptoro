@@ -74,3 +74,4 @@ class OpenRouterProvider(LLMProvider):
             f"OPENROUTER_API_KEY set: {bool(self.api_key)}",
             f"model: {self.model}",
         ]
+

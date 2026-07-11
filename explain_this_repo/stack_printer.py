@@ -17,3 +17,4 @@ def print_stack(report: dict, owner: str, repo: str) -> None:
         for v in values:
             print(f"- {v}")
         print()
+

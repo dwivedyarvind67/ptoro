@@ -67,3 +67,4 @@ class OpenAIProvider(LLMProvider):
             f"OPENAI_API_KEY set: {bool(self.api_key)}",
             f"model: {self.model}",
         ]
+

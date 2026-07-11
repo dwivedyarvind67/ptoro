@@ -17,3 +17,4 @@ def write_output(content: str, output_file: str = "EXPLAIN.md") -> None:
     output_path = resolve_output_path(output_file)
 
     output_path.write_text(content, encoding="utf-8")
+

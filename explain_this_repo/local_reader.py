@@ -130,3 +130,4 @@ def read_local_repo_signal_files(path: str) -> LocalReadResult:
         key_files=key_files,
         files_text=files_text,
     )
+

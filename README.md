@@ -89,7 +89,7 @@ explain owner/repo
 Replace `owner/repo` with the GitHub repository identifier (e.g., `facebook/react`, `torvalds/linux`).
 
 
-For full installation instructions, platform-specific notes, standalone binaries, and advanced setup: [docs/INSTALLATION.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/INSTALLATION.md)
+For full installation instructions, platform-specific notes, standalone binaries, and advanced setup: [docs/INSTALLATION.md](https://github.com/dwivedyarvind67/ptoro/blob/main/docs/INSTALLATION.md)
 
 ## Flexible Input Types
 
@@ -128,7 +128,7 @@ explainthisrepo init
 # or npx explainthisrepo init
 ```
 
-> For details about how initialization works, see [docs/INIT.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/INIT.md).
+> For details about how initialization works, see [docs/INIT.md](https://github.com/dwivedyarvind67/ptoro/blob/main/docs/INIT.md).
 
 To install support for specific models:
 
@@ -150,7 +150,7 @@ ExplainThisRepo supports GitHub authentication for:
 explainthisrepo init
 ```
 
-For step-by-step instructions, see [docs/GITHUB_TOKEN.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/GITHUB_TOKEN.md)
+For step-by-step instructions, see [docs/GITHUB_TOKEN.md](https://github.com/dwivedyarvind67/ptoro/blob/main/docs/GITHUB_TOKEN.md)
 
 ## Flag options
 
@@ -455,7 +455,7 @@ explainthisrepo --doctor
 
 ExplainThisRepo supports Termux on Android.
 
-For installation notes, PATH setup, Gemini support, and mobile-specific recommendations: see [docs/TERMUX.md](https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/TERMUX.md)
+For installation notes, PATH setup, Gemini support, and mobile-specific recommendations: see [docs/TERMUX.md](https://github.com/dwivedyarvind67/ptoro/blob/main/docs/TERMUX.md)
 
 ## Philosophy
 

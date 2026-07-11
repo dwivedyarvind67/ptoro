@@ -93,3 +93,4 @@ class OllamaProvider(LLMProvider):
             raise LLMProviderError("Ollama returned no text")
 
         return text.strip()
+

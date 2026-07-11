@@ -38,7 +38,7 @@ export function GithubToken() {
             <p className="text-xs text-muted-foreground mt-4">
               See{" "}
               <Link
-                href="https://github.com/calchiwo/ExplainThisRepo/blob/main/docs/GITHUB_TOKEN.md"
+                href="https://github.com/dwivedyarvind67/ptoro/blob/main/docs/GITHUB_TOKEN.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary underline hover:text-primary/80"
@@ -53,3 +53,4 @@ export function GithubToken() {
     </section>
   )
 }
+

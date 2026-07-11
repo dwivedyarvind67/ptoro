@@ -33,7 +33,7 @@ export function CTA() {
               </Button>
               <Button asChild variant="outline" size="lg" className="gap-2 px-6 bg-transparent">
                 <Link
-                  href="https://github.com/calchiwo/ExplainThisRepo"
+                  href="https://github.com/dwivedyarvind67/ptoro"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -48,3 +48,4 @@ export function CTA() {
     </section>
   )
 }
+

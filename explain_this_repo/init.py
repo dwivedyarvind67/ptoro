@@ -263,3 +263,4 @@ def run_init() -> None:
     write_config(contents)
 
     err.print("Configuration written.", style="green")
+
